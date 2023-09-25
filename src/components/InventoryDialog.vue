@@ -14,7 +14,20 @@
       alt="dialog content"
     />
     <hr />
-    <base-button mode="red">Удалить предмет</base-button>
+
+    <div v-if="isDeleteItem" class="dialog__delete__item">
+      <input type="number" placeholder="Введите количество" />
+      <div class="dialog__delete__item-btn">
+        <base-button mode="white white-cancel">Отмена</base-button>
+        <base-button mode="red red-approve" @click="deleteItemCount"
+          >Подтвердить</base-button
+        >
+      </div>
+    </div>
+
+    <base-button v-else mode="red red-delete" @click="onDeleteItem"
+      >Удалить предмет</base-button
+    >
   </div>
 </template>
 
@@ -31,8 +44,20 @@ const item = computed(() => {
   );
 });
 
+const isDeleteItem = computed(() => {
+  return store.getters.isDeleteItem;
+});
+
 const closeDialog = () => {
   store.commit("setIsOpenDialog", false);
+  store.commit("setDeleteItem", false);
+};
+const onDeleteItem = () => {
+  store.commit("setDeleteItem", true);
+};
+
+const deleteItemCount = () => {
+  store.commit("deleteCountItem", { id: item.value.id, count: 1 });
 };
 </script>
 
@@ -46,6 +71,7 @@ const closeDialog = () => {
   padding: 50px 20px 20px 20px;
   right: 0;
   width: 250px;
+  height: 86%;
   border-left: 1px solid #4d4d4d;
   background: rgba(38, 38, 38, 0.5);
   backdrop-filter: blur(8px);
@@ -69,6 +95,36 @@ const closeDialog = () => {
 
   &__descr {
     margin: 24px 0;
+  }
+
+  &__delete__item {
+    position: absolute;
+    bottom: 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 0 0 12px;
+    padding: 27px;
+    border: 1px solid #4d4d4d;
+    background-color: rgb(47 47 47 / 80%);
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+
+    input {
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      background-color: transparent;
+      width: 210px;
+      padding: 12px;
+      color: rgba(255, 255, 255, 1);
+    }
+
+    &-btn {
+      margin-top: 20px;
+      display: flex;
+      column-gap: 10px;
+    }
   }
 }
 

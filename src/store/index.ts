@@ -10,6 +10,7 @@ export interface Items {
 export interface Dialog {
   isOpen: boolean;
   activeItem: Items | null;
+  deleteItem: boolean;
 }
 
 export interface State {
@@ -47,6 +48,7 @@ const store = createStore<State>({
     dialog: {
       isOpen: false,
       activeItem: null,
+      deleteItem: false,
     },
   },
   getters: {
@@ -62,14 +64,19 @@ const store = createStore<State>({
     activeItem(state) {
       return state.dialog.activeItem;
     },
+    isDeleteItem(state) {
+      return state.dialog.deleteItem;
+    },
   },
   mutations: {
     setIsOpenDialog(state, payload) {
       state.dialog.isOpen = payload;
     },
-
     setActiveItem(state, payload) {
       state.dialog.activeItem = payload;
+    },
+    setDeleteItem(state, payload) {
+      state.dialog.deleteItem = payload;
     },
   },
 });

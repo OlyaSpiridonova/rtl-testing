@@ -33,7 +33,6 @@
 
 <script setup>
 import InventoryDialog from "@/components/InventoryDialog";
-import { ref } from "vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
 

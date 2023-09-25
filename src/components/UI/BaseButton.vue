@@ -20,17 +20,30 @@ button {
   font-size: 14px;
   font-weight: 400;
   border: none;
+  cursor: pointer;
 }
 
 .red {
-  width: 220px;
-  padding: 11px 50px;
   background-color: var(--primary-red);
   color: #fff;
+
+  &-delete {
+    padding: 11px 50px;
+    width: 220px;
+  }
+  &-approve {
+    padding: 8px 20px;
+    box-shadow: 0px 0px 18px 0px #fa7272;
+  }
 }
 
 .white {
   background-color: #fff;
   color: #2d2d2d;
+
+  &-cancel {
+    padding: 8px 20px;
+    box-shadow: 0px 0px 18px 0px #fa7272;
+  }
 }
 </style>
