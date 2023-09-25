@@ -7,9 +7,15 @@ export interface Items {
   category: number;
 }
 
+export interface Dialog {
+  isOpen: boolean;
+  activeItem: Items | null;
+}
+
 export interface State {
   items: Items[];
   cells: number[];
+  dialog: Dialog;
 }
 
 const store = createStore<State>({
@@ -38,6 +44,10 @@ const store = createStore<State>({
       1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21,
       22, 23, 24, 25,
     ],
+    dialog: {
+      isOpen: false,
+      activeItem: null,
+    },
   },
   getters: {
     items(state) {
@@ -45,6 +55,21 @@ const store = createStore<State>({
     },
     cells(state) {
       return state.cells;
+    },
+    isOpenDialog(state) {
+      return state.dialog.isOpen;
+    },
+    activeItem(state) {
+      return state.dialog.activeItem;
+    },
+  },
+  mutations: {
+    setIsOpenDialog(state, payload) {
+      state.dialog.isOpen = payload;
+    },
+
+    setActiveItem(state, payload) {
+      state.dialog.activeItem = payload;
     },
   },
 });

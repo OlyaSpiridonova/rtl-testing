@@ -15,6 +15,7 @@
         :key="item.id"
         :id="item.id"
         draggable="true"
+        @click="openDialog($event)"
       >
         <img
           class="cells__draggable-image"
@@ -24,10 +25,15 @@
         <div class="cells__draggable__id">{{ item.count }}</div>
       </div>
     </div>
+    <transition name="dialog" mode="in-out">
+      <inventory-dialog v-if="isOpenDialog" />
+    </transition>
   </div>
 </template>
 
 <script setup>
+import InventoryDialog from "@/components/InventoryDialog";
+import { ref } from "vue";
 import { computed } from "vue";
 import { useStore } from "vuex";
 
@@ -39,6 +45,13 @@ const cells = computed(() => {
 const items = computed(() => {
   return store.getters.items;
 });
+
+const isOpenDialog = computed(() => {
+  return store.getters.isOpenDialog;
+});
+
+// const isOpenModal = ref(false);
+// const activeItemId = ref(0);
 
 const onDragStart = (event, item) => {
   event.dataTransfer.dropEffect = "move";
@@ -52,10 +65,18 @@ const onDrop = (event, id) => {
   item.category = id;
   localStorage.setItem(String(item.id), String(item.category));
 };
+
+const openDialog = (event) => {
+  if (event.target.matches(".cells__draggable")) {
+    store.commit("setIsOpenDialog", true);
+    store.commit("setActiveItem", Number(event.target.id));
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .cells {
+  position: relative;
   display: grid;
   grid-area: cells;
   grid-template-rows: repeat(5, 100px);
@@ -63,7 +84,6 @@ const onDrop = (event, id) => {
   width: 525px;
   height: 100%;
   border-radius: 12px;
-  border: 1px solid var(--border-color);
   background-color: var(--secondary-bg);
   &__droppable {
     border: 1px solid #4d4d4d;
@@ -109,5 +129,16 @@ const onDrop = (event, id) => {
       border-radius: 6px 0px 0px 0px;
     }
   }
+}
+
+.dialog-enter-active,
+.dialog-leave-active {
+  transition: all 0.3s ease-in;
+}
+
+.dialog-enter-from,
+.dialog-leave-to {
+  transform: translateX(30px);
+  opacity: 0;
 }
 </style>

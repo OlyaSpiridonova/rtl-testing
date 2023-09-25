@@ -17,12 +17,13 @@ import InventoryBottom from "@/components/InventoryBottom.vue";
 * {
   margin: 0;
   padding: 0;
+  font-family: "Inter";
   --primary-bg: #1d1d1d;
   --secondary-bg: #262626;
   --border-color: #4d4d4d;
   --skeleton: #2f2f2f;
   --border-radius: 12px;
-  font: Inter;
+  --primary-red: #fa7272;
 }
 #app {
   display: flex;
