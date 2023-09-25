@@ -1,27 +1,45 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png" />
-  <HelloWorld msg="Welcome to Your Vue.js + TypeScript App" />
+  <div class="container">
+    <inventory-block />
+    <inventory-cell />
+    <inventory-bottom />
+  </div>
 </template>
 
-<script lang="ts">
-import { defineComponent } from "vue";
-import HelloWorld from "./components/HelloWorld.vue";
-
-export default defineComponent({
-  name: "App",
-  components: {
-    HelloWorld,
-  },
-});
+<script setup lang="ts">
+import InventoryBlock from "@/components/InventoryBlock.vue";
+import InventoryCell from "@/components/InventoryCell.vue";
+import InventoryBottom from "@/components/InventoryBottom.vue";
 </script>
 
 <style lang="scss">
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Open+Sans:wght@400;600;700;800&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  --primary-bg: #1d1d1d;
+  --secondary-bg: #262626;
+  --border-color: #4d4d4d;
+  --skeleton: #2f2f2f;
+  --border-radius: 12px;
+  font: Inter;
+}
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  display: flex;
+  align-items: center;
+  height: 100vh;
+  background-color: var(--primary-bg);
+}
+.container {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "main cells"
+    "bottom bottom";
+  gap: 20px;
+  margin: 0 auto;
+  padding: 32px;
+  max-width: 849px;
 }
 </style>
